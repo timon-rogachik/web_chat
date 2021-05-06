@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block h_position %}unset{% endblock %}
+{% block h_container %}container-xl{% endblock %}
+
+{% block main %}
+<div class="main" style="max-width: 96%;">
+
+        <div class ="container-xl">
+
+            {% for section in sections %}
+                {% url 'section' section.id as link %}
+                {% if section.image %}
+                    {% include 'app_chat/chat_card.html' with image=section.image.url title=section.title img_alt=section.title %}
+                {% else %}
+                    {% include 'app_chat/chat_card.html' with title=section.title img_alt=section.title %}
+                {% endif %}
+            {% endfor %}
+            {% url "notes_chat" as link %}
+            {% include 'app_chat/chat_card.html' with title='Заметки' img_alt=section.title %}
+        </div>
+
+</div>
+{% endblock %}

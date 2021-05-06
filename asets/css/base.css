@@ -1,0 +1,99 @@
+* {
+    box-sizing: content-box;
+}
+
+img{
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.my_header{
+
+}
+
+.my_header > div{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+.header__profile{
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-decoration-line: none;
+}
+
+.header__profile__img{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+    margin-left: 40px;
+}
+
+.header__profile__bio{
+    font-size: 18px;
+    color: white;
+}
+
+.header__controls{
+    display: flex;
+    align-items: center;
+    margin-right: 40px;
+}
+
+.header__controls__link{
+    margin-right: 15px;
+    margin-left: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    color: white;
+    text-decoration-line: none;
+    font-size: 19px
+    ;
+}
+
+.header__controls__link:hover{
+    color: rgb(214, 210, 255);
+    font-size: 20px;
+    border: 1px solid
+}
+.main > div{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+}
+
+.main__card{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image:url(web_chat_imgs/фон_д_к.png);
+    border-radius: 25px;
+    box-shadow: 10px 10px 12px 9px rgba(91, 27, 180, 0.363);
+    width: 260px;
+    height: 230px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-bottom: 28px;
+    margin-top: 28px;
+    text-decoration-line: none;
+}
+
+.main__card:hover{
+    box-shadow: none;
+}
+
+.main__card__text{
+    color:white;
+    text-align: center;
+    font-size: 26px;
+}
+.main__card__img{
+    width: 60%;
+}

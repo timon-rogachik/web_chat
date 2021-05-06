@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load gravatar %}
+{% load static %}
+{% block extra_css %}<link href="{% static 'css/registr-profile-login.css' %}" rel="stylesheet"/>{% endblock %}
+{% block main %}
+<div class="main" align="center">
+
+        <p class="title-row">Профиль</p>
+        <hr class="separator">
+        <div class ="container-xl">
+            <form method="post" enctype="multipart/form-data" style="margin-left: 185px;">
+                {% csrf_token %}
+                <div class="profile-row" style="margin-left: 50px; margin-bottom: 75px;">
+                    <input type="image" id="loadFileXml" value="loadXml" class="header__profile__img"
+                    style="height: 75px; width: 75px;"
+                         src="{% if user.avatar %}
+                            {{ user.avatar.url }}
+                         {% elif user.email %}
+                            {% gravatar_url user.email %}
+                         {% else %}
+                            {% static 'app_chat/web_chat_imgs/пер_ик.png' %}
+                         {% endif %}" alt="userpick"
+                           onclick="document.getElementById('id_avatar').click();" />
+                    <input type="file" style="display:none;" name="avatar" accept="image/*" id='id_avatar'/>
+                    <div>
+                        <ul>
+                            {% for error in form.username.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        <input class="half-profile-form"
+                            placeholder="Имя пользователя"
+                            value="{{ form.username.value }}"
+                            type="text"
+                            name="username"
+                            maxlength="50"
+                            aria-label="username">
+                    </div>
+                </div>
+
+                <div class="names">
+                        <div>
+                            <ul>
+                                {% for error in form.first_name.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                            <input class="half-profile-form"
+                                placeholder="Имя"
+                                value="{{ form.first_name.value }}"
+                                type="text"
+                                name="first_name"
+                                maxlength="50"
+                                aria-label="first_name">
+                        </div>
+                        <div style="margin-left: 20%">
+                            <ul>
+                                {% for error in form.last_name.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                            <input class="half-profile-form"
+                                placeholder="Фамилия"
+                                value="{{ form.last_name.value }}"
+                                type="text"
+                                name="last_name"
+                                maxlength="50"
+                                aria-label="last_name">
+                        </div>
+                </div>
+
+                <div style="margin-top: 50px;">
+                    <ul>
+                        {% for error in form.email.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    <input class="half-profile-form"
+                         placeholder="Адресс электроной почты"
+                         value="{{ form.email.value }}"
+                         type="text"
+                         name="email"
+                         maxlength="50"
+                         aria-label="email">
+                </div>
+
+                <button style="background: url('{% static 'app_chat/web_chat_imgs/фон_д_к.png' %}');" class="form-button" type="submit">Сохранить</button>
+
+            </form>
+
+        </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,7 @@
+{% load translater %}
+<div style="overflow: hidden;">
+    {% for tl in texts|range_lltt %}
+        <a style="float: left; margin: 0px;" href="{% do_tr links tl %}">{% do_tr links tl %}</a>
+        <p style="float: left; margin: 0px; white-space: pre;" class='{% if how == user %}my-message-text{% else %}message-text{% endif %}'>{% do_tr texts tl %}</p>
+    {% endfor %}
+</div>

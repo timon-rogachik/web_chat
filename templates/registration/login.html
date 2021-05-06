@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load gravatar %}
+{% load static %}
+{% block extra_css %}<link href="{% static 'css/registr-profile-login.css' %}" rel="stylesheet"/>{% endblock %}
+{% block main %}
+<div class="main" align="center">
+
+        <p class="title-row">Вход</p>
+        <hr class="separator">
+        <div class ="container-xl">
+            <form method="post" enctype="multipart/form-data" style="margin-left: 255px;">
+                {% csrf_token %}
+                <div style="margin-bottom: 25px; width: 450px;">
+                    <ul>
+                        {% for error in form.username.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    <input type="text" name="username" value="timon" autofocus autocapitalize="none"
+                     autocomplete="username" maxlength="150" required id="id_username"
+                        class="half-profile-form"
+                        placeholder="Пароль">
+                </div>
+
+                <div style="margin-top: 30px; width: 450px;">
+                    <ul>
+                        {% for error in form.password.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+
+                    <input type="password" name="password" autocomplete="current-password"
+                    required id="id_password"
+                        class="half-profile-form"
+                           placeholder="Пароль">
+                </div>
+
+                <button style="background: url('{% static 'app_chat/web_chat_imgs/фон_д_к.png' %}'); width: 45%; height:15%;" class="form-button" type="submit">Войти</button>
+
+            </form>
+
+        </div>
+
+</div>
+{% endblock %}

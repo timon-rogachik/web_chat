@@ -1,0 +1,62 @@
+.names{
+    display: flex;
+    width: 100%
+
+}
+
+.profile-row{
+   display: flex;
+}
+
+.half-profile-form{
+    display: flex;
+    border: none;
+    font-size: 20px;
+    padding: 4px 12px;
+    border-radius: 15px;
+    border: none;
+    margin: 10px;
+    width: 100%;
+    background-color: rgba(70, 26, 105, 0.2);
+}
+
+
+.half-profile-form:active, .half-profile-form:focus{
+    outline: 'none';
+}
+
+.form-button {
+    margin-top: 20px;
+    width: 28%;
+    height: 8%;
+    border-radius: 10px;
+    color: white;
+    border: none;
+
+}
+
+.title-row{
+    font-size: 26px;
+    font: monospace;
+    color: rgba(70, 26, 105, 0.67)
+}
+
+.separator{
+    color: rgba(70, 26, 105, 0.67)
+}
+
+.login{
+    padding: 4px 16px;
+    margin-top: 35px;
+    font-size: 17px;
+    border-radius: 10px;
+    color: white;
+    margin-left: 25%;
+    text-decoration-line: none;
+
+}
+
+.login:hover{
+    color: white;
+    text-decoration-line: none;
+}

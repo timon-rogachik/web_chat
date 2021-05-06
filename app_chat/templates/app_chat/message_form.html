@@ -1,0 +1,12 @@
+{% load static %}
+{% load my_filters %}
+
+<form method="post" name="message_form" class="form-format">
+    {% csrf_token %}
+    <input type="hidden" name="form" value="{{ value }}" required>
+    <textarea id='textArea {{ value }}' rows="1" class="form-input" name="text" aria-label="text"
+     oninput="textarea_resize_input('textArea {{ value }}', 'postButton {{ value }}'); post_from_enter('textArea {{ value }}', 'postButton {{ value }}');"
+     onchange="textarea_resize_input('textArea {{ value }}', 'postButton {{ value }}'); post_from_enter('textArea {{ value }}', 'postButton {{ value }}');"
+     placeholder="Создать сообщение..." onfocus="post_from_enter('textArea {{ value }}', 'postButton {{ value }}');"></textarea>
+    <button id='postButton {{ value }}' type="submit" class="create-btn"><img src="{% static 'app_chat/web_chat_imgs/sent_img.png' %}"></button>
+</form>

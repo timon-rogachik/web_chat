@@ -1,0 +1,9 @@
+{% load static %}
+<a class="main__card" href="{{ link }}#conversationBottom"
+   style="background: url('{% static 'app_chat/web_chat_imgs/фон_д_к.png' %}')">
+                <span class="main__card__text">{{ title }}</span>
+                {% if image %}
+                    <img class="main__card__img"
+                    src="{{ image }}" alt="{{ img_alt }}">
+                {% endif %}
+</a>

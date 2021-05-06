@@ -1,0 +1,51 @@
+{% load static %}
+{% load gravatar %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>web_chat</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+    <link href="{% static 'css/base.css' %}"
+    rel="stylesheet"/>
+    {% block extra_css %}{% endblock %}
+
+</head>
+<body style="background: {% block background %}{% endblock %}; overflow-y: {% block overflow-lines %}{% endblock %}; overflow-x: hidden">
+    <header class="my_header"
+    style="background: url('{% static 'app_chat/web_chat_imgs/фон_д_к.png' %}'); width: 100vw; position: {% block h_position %}{% endblock %};">
+
+        <div class ="{% block h_container %}{% endblock %}">
+            <a href="{% url 'profile' %}" class="header__profile">
+                <img class="header__profile__img"
+                     src="{% if user.avatar %}
+                        {{ user.avatar.url }}
+                     {% elif user.email %}
+                        {% gravatar_url user.email %}
+                     {% else %}
+                        {% static 'app_chat/web_chat_imgs/пер_ик.png' %}
+                     {% endif %}" alt="userpick">
+                <span class="header__profile__bio">{{ user.first_name }} {{ user.last_name }}</span>
+            </a>
+
+            <div class="header__controls">
+                <a class = "header__controls__link" href="{% url 'main' %}">Главная</a>
+                <a class = "header__controls__link" href="{% url 'register' %}">Регистрация/Вход</a>
+                {% if not user.is_anonymous %}
+                    <a class = "header__controls__link" href="{% url 'logout' %}">Выйти</a>
+                {% endif %}
+
+            </div>
+        </div>
+
+    </header>
+
+<div style="max-width: 100%;">
+    {% block main %}{% endblock %}
+</div>
+</body>
+</html>
