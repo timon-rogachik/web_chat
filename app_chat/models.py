@@ -37,6 +37,7 @@ class Message(models.Model):
     def refactor_text(self, text):
         self.text = text
 
+
 class Note(models.Model):
     text = models.TextField()
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notes')

@@ -11,8 +11,8 @@
             <form method="post" enctype="multipart/form-data" style="margin-left: 185px;">
                 {% csrf_token %}
                 <div class="profile-row" style="margin-left: 50px; margin-bottom: 75px;">
-                    <input type="image" id="loadFileXml" value="loadXml" class="header__profile__img"
-                    style="height: 75px; width: 75px;"
+                    <input type="image" class="header__profile__img"
+                    style="height: 75px; width: 75px;" name="avatar"
                          src="{% if user.avatar %}
                             {{ user.avatar.url }}
                          {% elif user.email %}
@@ -21,7 +21,7 @@
                             {% static 'app_chat/web_chat_imgs/пер_ик.png' %}
                          {% endif %}" alt="userpick"
                            onclick="document.getElementById('id_avatar').click();" />
-                    <input type="file" style="display:none;" name="avatar" accept="image/*" id='id_avatar'/>
+                    <input type="file" accept="image/*" id='id_avatar'/>
                     <div>
                         <ul>
                             {% for error in form.username.errors %}
@@ -83,7 +83,6 @@
                          maxlength="50"
                          aria-label="email">
                 </div>
-
                 <button style="background: url('{% static 'app_chat/web_chat_imgs/фон_д_к.png' %}');" class="form-button" type="submit">Сохранить</button>
 
             </form>
