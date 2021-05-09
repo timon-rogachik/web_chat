@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load gravatar %}
 {% load static %}
-{% block extra_css %}<link href="{% static 'css/registr-profile-login.css' %}" rel="stylesheet"/>{% endblock %}
+{% block extra_css %}<link href="{% static 'css/rgr-prf-lgn.css' %}" rel="stylesheet"/>{% endblock %}
 {% block main %}
 <div class="main" align="center">
 
@@ -11,17 +11,18 @@
             <form method="post" enctype="multipart/form-data" style="margin-left: 185px;">
                 {% csrf_token %}
                 <div class="profile-row" style="margin-left: 50px; margin-bottom: 75px;">
-                    <input type="image" class="header__profile__img"
-                    style="height: 75px; width: 75px;" name="avatar"
+
+                    <label for="id_avatar">
+                        <img class="header__profile__img profile-img"
                          src="{% if user.avatar %}
                             {{ user.avatar.url }}
                          {% elif user.email %}
                             {% gravatar_url user.email %}
                          {% else %}
                             {% static 'app_chat/web_chat_imgs/пер_ик.png' %}
-                         {% endif %}" alt="userpick"
-                           onclick="document.getElementById('id_avatar').click();" />
-                    <input type="file" accept="image/*" id='id_avatar'/>
+                         {% endif %}" alt="userpick">
+                    </label>
+                    <input style="visibility: hidden; display: none;" type="file" accept="image/*" id='id_avatar' name="avatar"/>
                     <div>
                         <ul>
                             {% for error in form.username.errors %}
@@ -90,4 +91,5 @@
         </div>
 
 </div>
+ <script type="text/javascript" src='{% static "js/profile.js" %}'></script>
 {% endblock %}
