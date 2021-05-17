@@ -21,7 +21,9 @@ function set_styles(id, change, change2='unset'){
         change2 = '0px'
     }
     document.getElementById(id).style.marginLeft = change2
-    document.getElementById(id).style.maxWidth = change
+    if (document.getElementById(id).style.maxWidth != change){
+        document.getElementById(id).style.maxWidth = change
+    }
 
 }
 
@@ -52,20 +54,20 @@ function post_from_enter(id, id2){
     })
 }
 
-window.addEventListener('scroll', function() {
-    console.log(pageYOffset + 'px')
-    let y_pos = pageYOffset;
-    if (y_pos >= 380){
-        change_visibility('topBtn', 'visible');}
-
-    else {
-        change_visibility('topBtn', 'hidden');}
-
-    if (y_pos >= 5750){
-        change_visibility('bottomBtn', 'hidden');
-  }
-
-  else {
-        change_visibility('bottomBtn', ' visible')
-  }
-});
+//window.addEventListener('scroll', function() {
+//    console.log(pageYOffset + 'px')
+//    let y_pos = pageYOffset;
+//    if (y_pos >= 380){
+//        change_visibility('topBtn', 'visible');}
+//
+//    else {
+//        change_visibility('topBtn', 'hidden');}
+//
+//    if (y_pos >= 5750){
+//        change_visibility('bottomBtn', 'hidden');
+//  }
+//
+//  else {
+//        change_visibility('bottomBtn', ' visible')
+//  }
+//});
