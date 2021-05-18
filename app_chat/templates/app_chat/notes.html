@@ -3,6 +3,14 @@
 
 {% block main %}
     {% for note in notes %}
-        {{ note }}
+        <div>
+            {{ note.text }}
+        </div>
     {% endfor %}
+    <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="form" value="note" required>
+        {{ note_form }}
+        <button type="submit">Заметить</button>
+    </form>
 {% endblock %}

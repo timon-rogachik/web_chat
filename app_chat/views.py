@@ -171,7 +171,14 @@ class ChatSection(TemplateView):
 
 
 def notes_chat(request):
+    if request.POST:
+        note_form = NoteForm(request.POST)
+        if note_form.is_valid():
+            note = note_form.save(commit=False)
+            note.user = request.user
+            note.save()
     context = {
         'notes':  Note.objects.all(),
+        'note_form': NoteForm()
     }
     return render(request, 'app_chat/notes.html', context=context)
