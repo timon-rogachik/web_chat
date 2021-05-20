@@ -171,14 +171,54 @@ class ChatSection(TemplateView):
 
 
 def notes_chat(request):
+    context = {
+        'notes':  Note.objects.filter(public=True),
+    }
+    return render(request, 'app_chat/notes/notes.html', context=context)
+
+
+def note_create(request):
     if request.POST:
         note_form = NoteForm(request.POST)
         if note_form.is_valid():
             note = note_form.save(commit=False)
             note.user = request.user
+            note.text = len_word_checker.check_end_return(note.text, mode='note_mode')
+            if note.name == None:
+                note.name = '"Без названия"'
             note.save()
+            return redirect(notes_chat)
+
     context = {
-        'notes':  Note.objects.all(),
         'note_form': NoteForm()
     }
-    return render(request, 'app_chat/notes.html', context=context)
+    return render(request, 'app_chat/notes/create_note.html', context=context)
+
+
+def profile_notes(request):
+    context = {
+        'notes': Note.objects.filter(user=request.user),
+    }
+    return render(request, 'account/my_notes.html', context=context)
+
+
+def visit_note(request, **kwargs):
+    note_id = kwargs.get('note_id')
+    if request.POST:
+        if request.POST.get('form') == 'refactor':
+            note_form = NoteRefactorForm(request.POST)
+            if note_form.is_valid():
+                note = note_form.save(commit=False)
+                note.user = request.user
+                note.text = len_word_checker.check_end_return(note.text, mode='note_mode')
+                Note.objects.filter(id=note_id).update(text=note.text, )
+                return redirect(notes_chat)
+
+        elif request.POST.get('form') == 'delete':
+            Note.objects.filter(id=note_id).delete()
+            return redirect(notes_chat)
+
+    context = {
+        'note': Note.objects.get(id=note_id),
+    }
+    return render(request, 'app_chat/notes/visit_note.html', context=context)

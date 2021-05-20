@@ -43,5 +43,7 @@ class Note(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notes')
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
+    name = models.CharField(max_length=20, null=True, blank=True, default='"Без названия"')
+    public = models.BooleanField(default=True)
 
 

@@ -25,6 +25,15 @@ def max_string_len_cnv(text):
     else:
         return 260
 
+@register.filter
+def max_string_len_note(text):
+    if len(text) >= len("ааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааа"):
+        return len("ааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааа") * 14
+    elif len(text) >= len("19 апреля 2021 г. 7:19"):
+        return int(len(text) * 12)
+    else:
+        return 260
+
 
 @register.filter
 def min_width_text(text):
@@ -50,6 +59,29 @@ def len_check_cut(word):
 
     else: return ' '
 
+@register.filter
+def len_check_cut_note(word):
+    if len(word) > 100:
+        result = ''
+        for i in range(0, len(word)):
+            if i > 100:
+                return result+"..."
+            else:
+                result += word[i]
+    return word
+
+
+@register.filter
+def len_string_cut_note(word):
+    result = list(word)
+    count = 0
+    for i in range(0, len(word)):
+        if count > len('1. Хлеб, 2. Мясо, 3. Молок') and result[i] != " " and result[i] != "":
+            result[i] += ' '
+            count = 0
+        else:
+            count += 1
+    return "".join(result)
 
 @register.filter
 def string_counter(text):

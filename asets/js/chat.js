@@ -13,17 +13,21 @@ function change_visibility(id, visibility_to_change = 'unset', display_to_change
         }
 }
 
-function set_styles(id, change, change2='unset'){
+function set_styles(id, change, change2='unset', change_int = 0){
     if (change2 === 'unset'){
         change2 = '120px'
     }
     else if (change2 === 'none') {
         change2 = '0px'
     }
-    document.getElementById(id).style.marginLeft = change2
-    if (document.getElementById(id).style.maxWidth != change){
-        document.getElementById(id).style.maxWidth = change
+
+    if (change_int < 574){
+        document.getElementById(id).style.width = change
+        document.getElementById(id).style.marginLeft = change2
+        console.log("ааааааааааааааа!!")
     }
+    else{
+        console.log("неееееет.....")}
 
 }
 

@@ -9,10 +9,11 @@
 {% endblock %}
 {% block h_position %}fixed{% endblock %}
 {% block h_container %}container-fluid{% endblock %}
+{% block background %}rgb(250, 235, 265);{% endblock %}
 {% block main %}
 
     <div class="section-main">
-        <div class="section__left" style="border-right: 1px solid rgba(70, 26, 105, 0.67);">
+        <div class="section__left" style="border-right: 1px solid rgba(70, 26, 105, 0.67); overflow-y: scroll">
 
             <div style="" class="title-section-div"><p class="section-title">{{ section_title }}</p></div>
 
@@ -90,7 +91,7 @@
             <a name="conversationBottom"></a>
         </div>
 
-        <div class="section__right" style="">
+        <div class="section__right">
 
             {% if conversation_id %}
                 <div class="title-section-div"><p class="section-title">{{ conversation_now|len_check_cut }}</p></div>
@@ -144,7 +145,7 @@
                                 src="{% static 'app_chat/web_chat_imgs/шестирёнка.png' %}" onclick = 'change_visibility("{% refactor_id message.id %}", "unset", "flex");
                                 change_visibility("{% refactor_form_id message.id %}", "hidden", "none"); change_visibility("{{ message.id }}", "visible");
                                 change_visibility("{% refactor_btn message.id %}", "visible", "unset");
-                                set_styles("{% div_id message.id %}", "{{ message.text|max_string_len }}px", "{{ message.text|max_string_len|MARGIN }}px")'>
+                                set_styles("{% div_id message.id %}", "{{ message.text|max_string_len }}px", "{{ message.text|max_string_len|MARGIN }}px", {{ message.text|max_string_len }});'>
                             {% endif %}
 
                         </div>
@@ -178,7 +179,7 @@
 
     </div>
 
-    <script type="text/javascript" src='{% static "js/in_chat.js" %}'></script>
+    <script type="text/javascript" src='{% static "js/chat.js" %}'></script>
 
 
 {% endblock %}

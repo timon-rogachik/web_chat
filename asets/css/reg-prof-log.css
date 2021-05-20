@@ -69,3 +69,19 @@
 .profile-img:hover{
     cursor: pointer;
 }
+
+.note-url{
+    padding: 7px 85px;
+    margin-top: 15px;
+    font-size: 17px;
+    border-radius: 10px;
+    color: white;
+    margin-left: 15%;
+    text-decoration-line: none;
+
+}
+
+.note-url:hover{
+    color: white;
+    text-decoration-line: none;
+}

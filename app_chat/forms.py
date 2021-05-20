@@ -25,7 +25,14 @@ class ConversationRefactorForm(forms.ModelForm):
         model = Message
         fields = ("text", )
 
+
 class NoteForm(forms.ModelForm):
+    class Meta:
+        model = Note
+        fields = ("text", "name", "public", )
+
+
+class NoteRefactorForm(forms.ModelForm):
     class Meta:
         model = Note
         fields = ("text", )

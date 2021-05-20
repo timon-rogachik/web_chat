@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load gravatar %}
 {% load static %}
-{% block extra_css %}<link href="{% static 'css/rgr-prf-lgn.css' %}" rel="stylesheet"/>{% endblock %}
+{% block extra_css %}<link href="{% static 'css/reg-prof-log.css' %}" rel="stylesheet"/>{% endblock %}
 {% block main %}
 <div class="main" align="center">
 
@@ -10,7 +10,7 @@
         <div class ="container-xl">
             <form method="post" enctype="multipart/form-data" style="margin-left: 185px;">
                 {% csrf_token %}
-                <div class="profile-row" style="margin-left: 50px; margin-bottom: 75px;">
+                <div class="profile-row" style="margin-left: 50px; margin-bottom: 15px;">
 
                     <label for="id_avatar">
                         <img class="header__profile__img profile-img"
@@ -38,8 +38,9 @@
                             aria-label="username">
                     </div>
                 </div>
+                <a href="{% url 'profile_notes' %}" style="background: url('{% static 'app_chat/web_chat_imgs/фон_д_к.png' %}');" class="note-url">Мои заметки</a>
 
-                <div class="names">
+                <div class="names" style="margin-top: 75px;">
                         <div>
                             <ul>
                                 {% for error in form.first_name.errors %}
