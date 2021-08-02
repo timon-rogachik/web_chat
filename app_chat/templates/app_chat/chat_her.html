@@ -5,19 +5,21 @@
 {% load gravatar %}
 {% block overflow-lines %}hidden{% endblock %}
 {% block extra_css %}
-    <link href="{% static 'css/in_chat.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css/chat_styles.css' %}" rel="stylesheet"/>
 {% endblock %}
 {% block h_position %}fixed{% endblock %}
 {% block h_container %}container-fluid{% endblock %}
 {% block background %}rgb(250, 235, 265);{% endblock %}
 {% block main %}
 
+    <script type="text/javascript" src='{% static "js/chat_f.js" %}'></script>
     <div class="section-main">
         <div class="section__left" style="border-right: 1px solid rgba(70, 26, 105, 0.67); overflow-y: scroll">
 
             <div style="" class="title-section-div"><p class="section-title">{{ section_title }}</p></div>
 
-            {% include 'app_chat/message_form.html' with value='conversation' form=conversation_form rows=c_form_rows%}
+            {% static 'app_chat/web_chat_imgs/sent_img.png' as sent_element %}
+            {% include 'app_chat/message_form.html' with value='conversation' form=conversation_form rows=c_form_rows button_image=sent_element %}
 
             <pre style="margin-top: 90px;"></pre>
             {% for conversation in conversations %}
@@ -31,20 +33,20 @@
                             <input type="hidden" name="form" value="conversation_delete" required>
                             <input type="hidden" name="ncd_id" value="{{ conversation.id }}" required>
 
-                            <button type="submit" class="remove-btn">Удалить</button>
+                            <button type="submit" class="remove-btn"><img src="{% static 'app_chat/web_chat_imgs/удалить.png' %}"></button>
                         </form>
 
                         <button id='{% conv_refactor_btn conversation.id %}' class="refactor-btn" onclick="
                         change_visibility('{% conv_refactor_form_id conversation.id %}', 'visible', 'unset');
-                        change_visibility('{% t_conversation_id conversation.id %}', 'hidden', 'none'); change_visibility('{% conv_refactor_btn conversation.id %}', 'hidden', 'none');
-                        set_styles('{% conv_div_id conversation.id %}', '360px', '35px')">Изменить</button>
+                        change_visibility('{{ conversation.id }}', 'hidden', 'none'); change_visibility('{% conv_refactor_btn conversation.id %}', 'hidden', 'none');
+                        set_styles('{% conv_div_id conversation.id %}', '360px', '70px')"
+                        style="margin-right: 280px;">Редактировать</button>
 
                     </div>
 
                 {% endif %}
 
-                    <div style="max-width: {{ conversation.text|max_string_len_cnv }}px;"
-                    class="conversation-format" id="{% conv_div_id conversation.id %}">
+                    <div class="conversation-format" id="{% conv_div_id conversation.id %}">
 
                         <div class="message-format-how">
 
@@ -63,15 +65,18 @@
                             {% if user == conversation.user %}
                                 <input class="set-btn" type="image"
                                 src="{% static 'app_chat/web_chat_imgs/шестирёнка.png' %}" onclick = 'change_visibility("{% conv_refactor_id conversation.id %}", "unset", "flex");
-                                change_visibility("{% conv_refactor_form_id conversation.id %}", "hidden", "none"); change_visibility("{% t_conversation_id conversation.id %}", "visible")
+                                change_visibility("{% conv_refactor_form_id conversation.id %}", "hidden", "none"); change_visibility("{{ conversation.id }}", "visible")
                                 change_visibility("{% conv_refactor_btn conversation.id %}", "visible", "unset");
                                 set_styles("{% conv_div_id conversation.id %}", "{{ conversation.text|max_string_len_cnv }}px", "20px")'>
                             {% endif %}
 
                         </div>
                         <a class="conversation-link" href="?conversation={{ conversation.id }}#bottom">
-                            <div id='{% t_conversation_id conversation.id %}' style="visibility: visible;">
-                                    <p class="conversation-text">{{ conversation }}</p>
+                            <div id="{{ conversation.id }}" style="visibility: visible; display: inline-block;">
+                                 <p id="{{ conversation.id|text_c_id }}" class="conversation-text">{{ conversation }}</p>
+                                 <script>
+                                    CountAndPast('{{ conversation.id }}', '{{ conversation.id|text_c_id }}', '{{ conversation.text }}', 450)
+                                 </script>
                             </div>
                         </a>
                         <form method="post" name="conversation_refactor" id="{% conv_refactor_form_id conversation.id %}" style="visibility: hidden; display: none; margin-right: 40px;">
@@ -80,7 +85,7 @@
                             <input type="hidden" name="ncd_id" value="{{ conversation.id }}" required>
                             <textarea rows="3" class="form-input" name="text" aria-label="text" style="width: 95%;"
                             >{{ conversation.text }}</textarea>
-                            <button type="submit" class="refactor-create-btn"><img src="{% static 'app_chat/web_chat_imgs/sent_img.png' %}"></button>
+                            <button type="submit" class="refactor-create-btn"><img src="{% static 'app_chat/web_chat_imgs/галочка.png' %}"></button>
                         </form>
 
                         <pre class="date-text-cnv">{{ conversation.created_at }}</pre>
@@ -96,12 +101,13 @@
             {% if conversation_id %}
                 <div class="title-section-div"><p class="section-title">{{ conversation_now|len_check_cut }}</p></div>
 
-                <a id="topBtn" class="top-bottom-btn" style="background: url('{% static 'app_chat/web_chat_imgs/фон_д_к.png' %}'); visibility: hidden; margin-top: 45px;" href="#">вверх переписки</a>
-                <a id="bottomBtn" class="top-bottom-btn" style="background: url('{% static 'app_chat/web_chat_imgs/фон_д_к.png' %}'); margin-top: 525px; visibility: visible;" href="#bottom">вниз переписки</a>
-                {% include 'app_chat/message_form.html' with value='message' form=message_form rows=m_form_rows %}
+                {% static 'app_chat/web_chat_imgs/sent_img.png' as sent_element %}
+                {% include 'app_chat/message_form.html' with value='message' form=message_form rows=m_form_rows button_image=sent_element file_possible=True %}
 
                 <pre style="margin-top: 90px;"></pre>
                 {% for message in messages %}
+
+                    <div style="clear: both;">
                     {% if user == message.user %}
 
                         <div class="message-format-how" id='{% refactor_id message.id %}'
@@ -111,27 +117,25 @@
                                 {% csrf_token %}
                                 <input type="hidden" name="form" value="delete" required>
                                 <input type="hidden" name="nmd_id" value="{{ message.id }}" required>
-                                <button type="submit" class="remove-btn">Удалить</button>
+                                <button style="margin-left: 280px;" type="submit" class="remove-btn"><img src="{% static 'app_chat/web_chat_imgs/удалить.png' %}"></button>
                             </form>
 
                             <button id='{% refactor_btn message.id %}' class="refactor-btn" onclick="
                             change_visibility('{% refactor_form_id message.id %}', 'visible', 'unset');
                             change_visibility({{ message.id }}, 'hidden', 'none'); change_visibility('{% refactor_btn message.id %}', 'hidden', 'none');
-                            set_styles('{% div_id message.id %}', '360px')">Изменить</button>
+                            set_styles('{% div_id message.id %}', '360px', '80px')">Редактировать</button>
 
                         </div>
 
                     {% endif %}
 
-                    <div style="max-width: {{ message.text|max_string_len }}px;{% if message.user == user and not message.text|length >= 40 %}margin-left:{{ message.text|max_string_len|MARGIN }}px;{% endif %}"
-                    class="{% if message.user == user %}my-message-format{% else %}message-format{% endif %}" id="{% div_id message.id %}">
+                    <div class="{% if message.user == user %}my-message-format{% else %}message-format{% endif %}" id="{% div_id message.id %}">
 
                         <div class="message-format-how">
 
                             <div class="message-format-how">
                                 <img class="header__profile__img message-img"
                             src="{% if message.user.avatar %}
-                                {{ message.user.avatar.url }}
                             {% elif message.user.email %}
                                 {% gravatar_url message.user.email %}
                             {% else %}
@@ -145,41 +149,62 @@
                                 src="{% static 'app_chat/web_chat_imgs/шестирёнка.png' %}" onclick = 'change_visibility("{% refactor_id message.id %}", "unset", "flex");
                                 change_visibility("{% refactor_form_id message.id %}", "hidden", "none"); change_visibility("{{ message.id }}", "visible");
                                 change_visibility("{% refactor_btn message.id %}", "visible", "unset");
-                                set_styles("{% div_id message.id %}", "{{ message.text|max_string_len }}px", "{{ message.text|max_string_len|MARGIN }}px", {{ message.text|max_string_len }});'>
+                                set_styles("{% div_id message.id %}", "1px", 0, returned=true);'>
                             {% endif %}
 
                         </div>
 
-                        <div id="{{ message.id }}" style="visibility: visible;">
+                        {% if message.attached_file %}
+                            <img style="height=100px; width: 200px;" src="{{ message.attached_file.url }}" onerror="this.style.display='none'">
+
+                            <video src="{{ message.attached_file.url }}"  onerror="this.style.display='none'" width="320" height="240" controls>
+                            Your browser does not support the video tag.
+                            </video>
+
+                            {% if message.attached_file|check_and_reed_text_file %}
+                                <a href="{% url 'file_page' %}?message_file={{ message.id }}"><img width="194px" height="245px" src="{% static 'app_chat/web_chat_imgs/text-file.png' %}"></a>
+                            {% endif %}
+
+                            <a href="{{ message.attached_file.url }}" download="">{{ message.attached_file|file_link_view }}</a>
+                        {% endif %}
+
+                        <div id="{{ message.id }}" style="visibility: visible; display: inline-block;">
                             {% if message.is_link %}
                                     {% include 'app_chat/link_message.html' with texts=message.texts_FIT links=message.links_FIT how=message.user %}
-                                    <br/>
                             {% else %}
-                                <p class="{% if message.user == user %}my-message-text{% else %}message-text{% endif %}">
+                                <p id="{{ message.id|text_m_id }}" class="{% if message.user == user %}my-message-text{% else %}message-text{% endif %}">
                                 {{ message }}</p>
+                                <script>
+                                    CountAndPast('{{ message.id }}', '{{ message.id|text_m_id }}', '{{ message.text }}', 460)
+                                </script>
                             {% endif %}
                         </div>
+
                         <form method="post" name="refactor" id="{% refactor_form_id message.id %}" style="visibility: hidden; display: none; margin-right: 40px;">
                             {% csrf_token %}
                             <input type="hidden" name="form" value="refactor" required>
                             <input type="hidden" name="nmd_id" value="{{ message.id }}" required>
                             <textarea rows="3" class="form-input" name="text" aria-label="text" style="width: 95%;"
                             >{{ message.text }}</textarea>
-                            <button type="submit" class="refactor-create-btn"><img src="{% static 'app_chat/web_chat_imgs/sent_img.png' %}"></button>
+                            <button type="submit" class="refactor-create-btn"><img src="{% static 'app_chat/web_chat_imgs/галочка.png' %}"></button>
                         </form>
-
                         <pre class="date-text">{{ message.created_at }}</pre>
-                    </div>
+                    </div></div>
 
                 {% endfor %}
-                <pre>       </pre>
+
                 <a name="bottom"></a>
+
+                <div style="clear: both; display: inline-block; visibility: hidden;">
+                    <p>fix, fix, fix!fix, fix, fix!fix, fix, fix!fix, fix, fix!</p>
+                </div>
             {% endif %}
         </div>
 
     </div>
 
-    <script type="text/javascript" src='{% static "js/chat.js" %}'></script>
+    <script type="text/javascript" src='{% static "js/chat_f.js" %}'></script>
 
 
 {% endblock %}
+

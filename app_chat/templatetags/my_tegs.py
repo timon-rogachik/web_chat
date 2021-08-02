@@ -96,3 +96,8 @@ def return_my(conversation_id, messages, user=None):
 @register.simple_tag()
 def get_text_from_form(form):
     return form.fields['text']
+
+
+@register.simple_tag()
+def get_value_by_element(sam_list, element):
+    return(sam_list[element])

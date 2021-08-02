@@ -8,6 +8,7 @@ urlpatterns = [
     path('section/notes/create_new/', note_create, name="notes_form"),
     path('profile/notes/', profile_notes, name="profile_notes"),
     path('section/notes/visit/<int:note_id>/', visit_note, name="visit_note"),
+    path('section/Files/', visit_text_file, name="file_page")
 ]
 
 

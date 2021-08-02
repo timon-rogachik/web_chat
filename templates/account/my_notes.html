@@ -38,6 +38,8 @@
                 <pre class="note-created-at">{{ note.created_at }}</pre>
             </div>
         </div>
+    {% empty %}
+        <p style="font-size: 31px; margin-left: 150px; margin-top: 150px; background: url('{% static 'app_chat/web_chat_imgs/фон_д_к.png' %}'); color: white; border-radius: 15px; padding: 10px">У вас пока нет никаких заметок!</p>
     {% endfor %}
     <a name="conversationBottom"></a>
     </div>

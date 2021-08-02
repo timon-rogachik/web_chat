@@ -11,7 +11,7 @@ class ConversationForm(forms.ModelForm):
 class MessageForm(forms.ModelForm):
     class Meta:
         model = Message
-        fields = ("text", )
+        fields = ("text", "attached_file", )
 
 
 class MessageRefactorForm(forms.ModelForm):

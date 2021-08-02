@@ -33,7 +33,6 @@ class ChatSection(TemplateView):
         else:
             my_conversations = []
 
-        mess_id = kwargs.get("message_id", 0)
         if conv_id:
             if not self.request.user.is_anonymous:
                 my_messages = Message.objects.filter(conversation_id=conv_id, user=self.request.user)
@@ -58,8 +57,8 @@ class ChatSection(TemplateView):
             conversation.fields['text'].initial = my_conversations[i]
             conv_r_forms.append(conversation)
 
-        conv_form = kwargs.get('conversation_form', ConversationForm())
-        mess_form = kwargs.get('message_form', MessageForm())
+        conv_form = ConversationForm()
+        mess_form = MessageForm()
 
         if 'text' in self.request.POST:
             form_rows = string_counter(self.request.POST['text'])
@@ -101,9 +100,7 @@ class ChatSection(TemplateView):
                     conversation = conv_form.save(commit=False)
                     conversation.section_id = section_id
                     conversation.user = user
-                    conversation.text = len_word_checker.check_end_return(conversation.text, 'cnv_mode')
                     conversation.save()
-                kwargs["conversation_form"] = conv_form
 
         elif form_type == "message":
             if conv_id:
@@ -114,6 +111,9 @@ class ChatSection(TemplateView):
                     message = mess_form.save(commit=False)
                     message.conversation_id = conv_id
                     message.user = user
+                    if "attached_file" in request.FILES:
+                        message.attached_file = request.FILES["attached_file"]
+
                     if validators.url(message.text) or url_checker.url_her(message.text):
                         message.is_link = True
                         if not validators.url(message.text):
@@ -126,9 +126,7 @@ class ChatSection(TemplateView):
                             message.texts_FIT = translate_ltt("")
                     else:
                         message.is_link = False
-                        message.text = len_word_checker.check_end_return(message.text)
                     message.save()
-                kwargs["message_form"] = mess_form
 
         elif form_type == "delete":
             Message.objects.filter(id=mess_id).delete()
@@ -151,7 +149,6 @@ class ChatSection(TemplateView):
                         message.texts_FIT = translate_ltt("")
                 else:
                     message.is_link = False
-                    message.text = len_word_checker.check_end_return(message.text)
                 Message.objects.filter(id=mess_id).update(text=message.text,
                 texts_FIT=message.texts_FIT, links_FIT=message.links_FIT, is_link=message.is_link)
 
@@ -164,7 +161,6 @@ class ChatSection(TemplateView):
                 conversation = conv_r_form.save(commit=False)
                 conversation.section_id = section_id
                 conversation.user = user
-                conversation.text = len_word_checker.check_end_return(conversation.text)
                 Conversations.objects.filter(id=conv_now_id).update(text=conversation.text, )
 
         return self.get(request, *args, **kwargs)
@@ -183,8 +179,7 @@ def note_create(request):
         if note_form.is_valid():
             note = note_form.save(commit=False)
             note.user = request.user
-            note.text = len_word_checker.check_end_return(note.text, mode='note_mode')
-            if note.name == None:
+            if note.name is None:
                 note.name = '"Без названия"'
             note.save()
             return redirect(notes_chat)
@@ -222,3 +217,15 @@ def visit_note(request, **kwargs):
         'note': Note.objects.get(id=note_id),
     }
     return render(request, 'app_chat/notes/visit_note.html', context=context)
+
+
+def visit_text_file(request):
+    message_id = int(request.GET.get("message_file"))
+    text = "Page blank"
+    if message_id:
+        file_mess = Message.objects.get(id=message_id)
+        text = str(file_mess.attached_file)
+        text = open("media/" + text, "r")
+        text = text.read()
+
+    return HttpResponse(text)

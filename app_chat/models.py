@@ -30,6 +30,8 @@ class Message(models.Model):
     is_link = models.BooleanField()
     links_FIT = models.TextField(blank=True, null=True)
     texts_FIT = models.TextField(blank=True, null=True)
+    attached_file = models.FileField(upload_to='MessagesFiles', null=True, blank=True)
+    attached_file_type = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return self.text

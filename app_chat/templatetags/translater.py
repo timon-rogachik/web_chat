@@ -11,6 +11,7 @@ def do_tr(value, tl):
     return translate_ttl(value)[tl]
 
 
+
 @register.filter
 def range_lltt(value):
     return range(len(translate_ttl(value)))

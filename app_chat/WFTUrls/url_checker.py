@@ -25,6 +25,9 @@ def parsing(text):
     result = ""
     for f in range(0, len(other)):
         result+=(links[f]+other[f])
+    print(other, " | ", links, " | ", result)
     return (other, links, result)
-#print(parsing("сылкаааааааа: https://stackoverflow.com/questions/1107737/numeric-for-loop-in-django-templates рабоооооотаай!!!"))
+
+
+# print(parsing("сылкаааааааа: https://stackoverflow.com/questions/1107737/numeric-for-loop-in-django-templates рабоооооотаай!!!"))
 

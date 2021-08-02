@@ -88,3 +88,33 @@ def string_counter(text):
     print(text)
     len_string = len("аааааааааааааааааааааааааааааааааааааааааааааааа")
     return int(math.ceil(len(text)/len_string))
+
+
+@register.filter
+def text_m_id(id):
+    return "text" + str(id) + 'm'
+
+@register.filter
+def text_c_id(id):
+    return "text" + str(id) + 'c'
+
+
+@register.filter
+def file_link_view(file):
+    return (str(file).replace("MessagesFiles/", ""))
+
+
+@register.filter
+def check_and_reed_text_file(message_file):
+    try:
+        text = open("media/" + str(message_file), 'r')
+        text = text.read()
+        print(text)
+
+    except Exception:
+        return False
+
+    else:
+        return True
+
+

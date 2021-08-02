@@ -33,6 +33,7 @@
     max-width: 280px;
     border-right: rgb(6, 6, 85) solid 1px;
     border-left: rgb(6, 6, 85) solid 1px;
+    display: inline-block;
 }
 
 .note-created-at{
