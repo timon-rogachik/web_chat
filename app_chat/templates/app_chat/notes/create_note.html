@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load gravatar %}
+{% block extra_css %}
+    <link href="{% static 'css/notes.css' %}" rel="stylesheet"/>
+{% endblock %}
+
+{% block main %}
+    <a href="{% url 'notes_chat' %}">
+        <img style="margin-left: 20px; position: fixed;" width="70px" height="40px" src="{% static 'app_chat/web_chat_imgs/стрелка(назад).png' %}"/>
+    </a>
+    <div align="center">
+        <form method="post" class="note-format">
+            {% csrf_token %}
+            {% url 'visit_note' note.id as link %}
+            <div class="note-format-top-bottom note-top-texts" style="width: 680px;">
+                <div class="note-top-texts">
+                <img class="header__profile__img note-img"
+                            src="{% if user.avatar %}
+                                {{ user.avatar.url }}
+                            {% elif user.email %}
+                                {% gravatar_url user.email %}
+                            {% else %}
+                                {% static 'app_chat/web_chat_imgs/пер_ик.png' %}
+                            {% endif %}">
+                <p>{{ user.username }}</p>
+                </div>
+                {{ note_form.name }}
+            </div>
+
+            <textarea style="width: 680px;" name="text" cols="40" rows="15" id="id_text"></textarea>
+
+            <div class="note-format-top-bottom" style="width: 680px;">
+                <pre class="note-created-at">{{ note.created_at }}</pre>
+            </div>
+
+            <label for="id_public">Публичная заметка</label>
+            <input type="checkbox" name="public" id="id_public" checked>
+
+            <button class="note-submit-btn" type="submit">Создать</button>
+        </form>
+    </div>
+{% endblock %}

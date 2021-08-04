@@ -30,6 +30,8 @@ class Message(models.Model):
     is_link = models.BooleanField()
     links_FIT = models.TextField(blank=True, null=True)
     texts_FIT = models.TextField(blank=True, null=True)
+    attached_file = models.FileField(upload_to='MessagesFiles', null=True, blank=True)
+    attached_file_type = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return self.text
@@ -43,5 +45,7 @@ class Note(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notes')
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
+    name = models.CharField(max_length=20, null=True, blank=True, default='"Без названия"')
+    public = models.BooleanField(default=True)
 
 

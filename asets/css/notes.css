@@ -1,0 +1,96 @@
+.notes-main{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 60px 100px;
+}
+
+.note-format{
+    margin-top: 20px;
+}
+
+.note-format-top-bottom{
+    border: rgb(6, 6, 85) solid 1px;
+    background-color: rgba(180, 180, 235, 0.3);
+    padding: 5px 8px;
+    width: 290px;
+    border-top-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.note-text{
+    color: rgb(3, 5, 50);
+    text-decoration-line: none;
+}
+
+.note-text:hover{
+    color: rgb(3, 5, 50);
+}
+
+.note-format-middle{
+    background-color: rgba(180, 180, 235, 0.1);
+    padding: 10px 13px;
+    text-decoration-line: none;
+    max-width: 280px;
+    border-right: rgb(6, 6, 85) solid 1px;
+    border-left: rgb(6, 6, 85) solid 1px;
+    display: inline-block;
+}
+
+.note-created-at{
+    color: rgb(40, 40, 45);
+    margin-left: 85px;
+}
+
+.note-img{
+    margin-left: 10px;
+    width: 30px;
+    height: 30px;
+}
+
+.note-top-texts{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.note-submit-btn{
+    border-radius: 7px;
+    background-color: rgb(85, 85, 220);
+    border: blue solid 1px;
+    color: white;
+    margin-top: 20px;
+
+}
+
+.note-refactor-btn{
+    position: absolute;
+    border-radius: 7px;
+    background-color: rgb(85, 85, 220);
+    border: blue solid 1px;
+    color: white;
+    top: 540px;
+    left: 380px;
+
+}
+
+.new-note-link{
+    position: fixed;
+    margin-top: 500px;
+    text-decoration-line: none;
+    border: rgb(160, 160, 180) solid 1px;
+    font-size: 20px;
+    border-radius: 4px;
+
+}
+
+.note-remove-btn{
+    position: absolute;
+    background-color: rgb(155, 0, 50);
+    color: thistle;
+    border-radius: 7px;
+    border-width: 2px solid;
+    border-color: red;
+    top: 540px;
+    right: 400px;
+
+}

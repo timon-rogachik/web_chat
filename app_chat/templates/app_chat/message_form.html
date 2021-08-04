@@ -1,12 +1,21 @@
 {% load static %}
 {% load my_filters %}
 
-<form method="post" name="message_form" class="form-format">
+<div style="display: inline-block; position: fixed" id="div {{ value }}">
+    <p style="visibility: hidden" id="P {{ value }}"></p>
+</div>
+
+<form enctype="multipart/form-data" method="post" name="message_form" class="form-format" novalidate>
     {% csrf_token %}
     <input type="hidden" name="form" value="{{ value }}" required>
     <textarea id='textArea {{ value }}' rows="1" class="form-input" name="text" aria-label="text"
-     oninput="textarea_resize_input('textArea {{ value }}', 'postButton {{ value }}'); post_from_enter('textArea {{ value }}', 'postButton {{ value }}');"
-     onchange="textarea_resize_input('textArea {{ value }}', 'postButton {{ value }}'); post_from_enter('textArea {{ value }}', 'postButton {{ value }}');"
+     oninput="textarea_resize_input('textArea {{ value }}', 'postButton {{ value }}', 'div {{ value }}', 'P {{ value }}'); post_from_enter('textArea {{ value }}', 'postButton {{ value }}');"
+     onchange="textarea_resize_input('textArea {{ value }}', 'postButton {{ value }}', 'div {{ value }}', 'P {{ value }}'); post_from_enter('textArea {{ value }}', 'postButton {{ value }}');"
      placeholder="Создать сообщение..." onfocus="post_from_enter('textArea {{ value }}', 'postButton {{ value }}');"></textarea>
-    <button id='postButton {{ value }}' type="submit" class="create-btn"><img src="{% static 'app_chat/web_chat_imgs/sent_img.png' %}"></button>
+    {% if file_possible == True %}
+        <br>
+        <label for="id_attached_file"><img class="attached" src="{% static 'app_chat/web_chat_imgs/choise_file_element.png' %}"></label>
+        <input style="visibility: hidden; display: none;" type="file" name="attached_file" id="id_attached_file">
+    {% endif %}
+    <button id='postButton {{ value }}' type="submit" class="create-btn"><img src="{{ button_image }}"></button>
 </form>

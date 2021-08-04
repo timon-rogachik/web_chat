@@ -1,7 +1,28 @@
 {% load translater %}
-<div style="overflow: hidden;">
+{% load my_tegs %}
+<div>
     {% for tl in texts|range_lltt %}
-        <a style="float: left; margin: 0px;" href="{% do_tr links tl %}">{% do_tr links tl %}</a>
-        <p style="float: left; margin: 0px; white-space: pre;" class='{% if how == user %}my-message-text{% else %}message-text{% endif %}'>{% do_tr texts tl %}</p>
+        {% do_tr links tl as value_l%}
+        {% if value_l != "" %}
+            <div style="display: inline-block;" id="{{ message.id }} linkDiv {{ tl }}">
+                <a id="{{ message.id }} link_h {{ tl }}"  href="{% do_tr links tl %}">{% do_tr links tl %}</a>
+            </div>
+        {% endif %}
+
+        {% do_tr texts tl as value_t%}
+        {% if value_t != "" %}
+            <div style="display: inline-block;" id="{{ message.id }} TextDiv {{ tl }}">
+                <p id='{{ message.id }} text_m_id {{ tl }}' class='{% if how == user %}my-message-text{% else %}message-text{% endif %}'>{% do_tr texts tl %}</p>
+            </div>
+        {% endif %}
+
+        <script>
+            {% if value_l != "" %}
+                CountAndPast('{{ message.id }} linkDiv {{ tl }}', '{{ message.id }} link_h {{ tl }}', '{% do_tr links tl %}', 410)
+            {% endif %}
+            {% if value_t != "" %}
+                CountAndPast('{{ message.id }} TextDiv {{ tl }}', '{{ message.id }} text_m_id {{ tl }}', '{% do_tr texts tl %}', 465)
+            {% endif %}
+        </script>
     {% endfor %}
 </div>

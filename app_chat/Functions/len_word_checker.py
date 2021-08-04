@@ -7,6 +7,8 @@ def check_end_return(text, mode='mess'):
     max_len = len("ааааааааааааааааааааааааааааааааааааааааа")
     if mode == 'cnv_mode':
         max_len = len("ааааааааааааааааааааааааааааааааааааа")
+    elif mode == 'note_mode':
+        max_len = len("аааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааа")
     word_len_count = 0
     count = 0
     text = text

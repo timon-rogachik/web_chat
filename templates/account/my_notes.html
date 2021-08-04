@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load gravatar %}
+{% load my_filters %}
+{% block extra_css %}
+    <link href="{% static 'css/notes.css' %}" rel="stylesheet"/>
+{% endblock %}
+
+{% block h_position %}fixed{% endblock %}
+
+{% block main %}
+    <a href="/profile/">
+        <img style="margin-left: 20px; margin-top: 85px; position: fixed;" width="70px" height="40px" src="{% static 'app_chat/web_chat_imgs/стрелка(назад).png' %}"/>
+    </a>
+    <div class="notes-main">
+    {% for note in notes %}
+        <div class="note-format" style="margin-left: 50px;">
+            {% url 'visit_note' note.id as link %}
+            <div class="note-format-top-bottom note-top-texts" style="max-width: {{ note.text|max_string_len_note }}">
+                <div class="note-top-texts">
+                <img class="header__profile__img note-img"
+                            src="{% if note.user.avatar %}
+                                {{ note.user.avatar.url }}
+                            {% elif note.user.email %}
+                                {% gravatar_url note.user.email %}
+                            {% else %}
+                                {% static 'app_chat/web_chat_imgs/пер_ик.png' %}
+                            {% endif %}">
+                <p>{{ note.user.username }}</p>
+                </div>
+
+                <p>{{ note.name }}</p>
+            </div>
+            <div class="note-format-middle">
+                <a href="{{ link }}" class="note-text">{{ note.text|len_check_cut_note|len_string_cut_note }}</a>
+            </div>
+            <div class="note-format-top-bottom" style="max-width: {{ note.text|max_string_len_note }}">
+                <pre class="note-created-at">{{ note.created_at }}</pre>
+            </div>
+        </div>
+    {% empty %}
+        <p style="font-size: 31px; margin-left: 150px; margin-top: 150px; background: url('{% static 'app_chat/web_chat_imgs/фон_д_к.png' %}'); color: white; border-radius: 15px; padding: 10px">У вас пока нет никаких заметок!</p>
+    {% endfor %}
+    <a name="conversationBottom"></a>
+    </div>
+{% endblock %}
